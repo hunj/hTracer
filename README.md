@@ -18,4 +18,11 @@ Made as a project for EECS325: Computer Networks class at Case Western Reserve U
 
 ## Notes
 
+A number of references has been used:
+
+### References
+
+- [Ksplice Blog - "Learning by doing: Writing your own traceroute in 8 easy steps"](https://blogs.oracle.com/ksplice/entry/learning_by_doing_writing_your)
+- 
+
 ## Issues
