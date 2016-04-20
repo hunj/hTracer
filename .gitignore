@@ -1,2 +1,2 @@
 # don't upload classwork to github
-report.docx
+*.docx
