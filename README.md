@@ -23,6 +23,6 @@ A number of references has been used:
 ### References
 
 - [Ksplice Blog - "Learning by doing: Writing your own traceroute in 8 easy steps"](https://blogs.oracle.com/ksplice/entry/learning_by_doing_writing_your)
-- 
+- [Black Hat Python: Building a UDP Scanner](http://bt3gl.github.io/black-hat-python-building-a-udp-scanner.html)
 
 ## Issues
