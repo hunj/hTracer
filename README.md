@@ -11,10 +11,33 @@ Made as a project for EECS325: Computer Networks class at Case Western Reserve U
 ## Instructions
 ### Requirements
 - Python 2.7.6
+- root privilege (yes, this one is serious)
 
 *Coming soon...*
 
 ### Running
+Write a list of IP addresses to probe around, separated by newline, using your favorite text editor:
+
+```
+$ vi targets.txt
+```
+
+Sample:
+
+```
+123.12.123.123
+132.132.12.132
+231.231.231.23
+...
+```
+
+Specify the filename as `targets.txt` in the same directory, then run using root privilege:
+
+```
+$ sudo python hTracer.py
+```
+
+The program will automatically run using the `targets.txt` file in the directory.
 
 ## Notes
 
