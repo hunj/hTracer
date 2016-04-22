@@ -10,6 +10,7 @@ import socket
 import struct
 import time
 import ctypes
+import math
 
 ## Environment setup
 PORT = 33444    # most implementations of traceroute use ports from 33434 to 33534.
@@ -24,18 +25,27 @@ VERBOSE = True
 
 ## End environment setup
 
-def main(target_file):
+def main(target_file, result_file):
     """
     main function contains the flow of the logic.
     returns a List that contains tuples of (target, ttl, rtt)
     """
-    result = []
+    # prepare data storage for result
+    raw_result = []
+    result = open(result_file, 'w')
+    
+    # make it pretty
+    result.write("host,TTL,RTT\n")
+
+    # run on each target
     for target in find_targets_in_file(target_file):
         ttl, rtt = number_of_hops_and_RTT_to(target)
-        result.append( (target, ttl, rtt) )
+        raw_result.append( (target, ttl, rtt) )
+        result.write("%s,%s,%s\n" % (target, ttl, rtt))
     print("<SYSTEM>: Probing complete. Result:")
-    print result
-    
+    print raw_result
+    result.close()
+    # good bye
 
 def create_sockets(ttl):
     """
@@ -65,7 +75,25 @@ def find_targets_in_file(filename):
     return targets
 
 def calculate_distance_between(host1, host2):
-    return 1
+    """
+    finds geolocations of the given two tuples of (latitude, longitude) and 
+    calculate their distance.
+
+    Source: https://gist.github.com/rochacbruno/2883505
+    """
+
+    lat1, lon1 = host1
+    lat2, lon2 = host2
+    radius = 6371 # km
+
+    dlat = math.radians(lat2-lat1)
+    dlon = math.radians(lon2-lon1)
+    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
+        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    d = radius * c
+
+    return d
 
 def number_of_hops_and_RTT_to(destination_name):
     # destination address and port
@@ -74,12 +102,11 @@ def number_of_hops_and_RTT_to(destination_name):
 
     # TTL is the number of "hops"
     ttl = 1
-    rtt = 0
+    rtt = time.time()
 
     while 1:
         recv_socket, send_socket = create_sockets(ttl)
-        current_time = time.time()
-
+        
         # specify the port and an empty string for the hostname
         recv_socket.bind(("", PORT))
 
@@ -107,7 +134,8 @@ def number_of_hops_and_RTT_to(destination_name):
             except socket.error:
                 current_name = current_address
         except socket.error, (value, message):
-            print "< ERROR >: Something went wrong: " + message
+            if message != "Resource temporarily unavailable":
+                print "< ERROR >: Something went wrong: " + message
             pass
         finally:
             send_socket.close()
@@ -124,13 +152,13 @@ def number_of_hops_and_RTT_to(destination_name):
         # Ending condition:
         # Either we have reached our destination, 
         # or we have exceeded some maximum number of hops
-        if current_address == destination_address or ttl > MAX_HOPS:
-            rtt = time.time() - current_time
-            print("<SYSTEM>: Probing '%s' complete. TTL: %s, RTT: %d" % (destination_name, ttl, rtt*1000))
+        if current_address == destination_address or ttl >= MAX_HOPS:
+            rtt = time.time() - rtt
+            print("<SYSTEM>: Probing '%s' complete. TTL: %s, RTT: %fms" % (destination_name, ttl, rtt*1000))
             return ttl, rtt * 1000 # rtt is calculated in seconds, we want milliseconds
 
         ttl += 1
 
 # This runs the code.
 if __name__ == "__main__":
-    print main("targets.txt")
+    print main("targets.txt", "result.csv")
