@@ -16,7 +16,7 @@ Made as a project for EECS325: Computer Networks class at Case Western Reserve U
 *Coming soon...*
 
 ### Running
-Write a list of IP addresses to probe around, separated by newline, using your favorite text editor:
+Write a list of websites to probe around, separated by newline, using your favorite text editor:
 
 ```
 $ vi targets.txt
@@ -25,9 +25,10 @@ $ vi targets.txt
 Sample:
 
 ```
-123.12.123.123
-132.132.12.132
-231.231.231.23
+google.com
+yahoo.com
+twitter.com
+naver.com
 ...
 ```
 
@@ -47,5 +48,8 @@ A number of references has been used:
 
 - [Ksplice Blog - "Learning by doing: Writing your own traceroute in 8 easy steps"](https://blogs.oracle.com/ksplice/entry/learning_by_doing_writing_your)
 - [Black Hat Python: Building a UDP Scanner](http://bt3gl.github.io/black-hat-python-building-a-udp-scanner.html)
+- [@rochacbruno](http://github.com/rochacbruno)'s [haversine.py: Calculate distance between latitude longitude pairs with Python](https://gist.github.com/rochacbruno/2883505)
 
 ## Issues
+
+- `calculate_distance_between(host1, host2)` method is defined, in which the parameters are two (latitude, longitude) tuples. Given the IP address, there should be a way to find its geolocation, but [FreeGeoIP](http://freegeoip.net/) is currently down. Furthur searching for a geolocation service is needed.
