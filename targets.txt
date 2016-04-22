@@ -1,2 +1,10 @@
-google.com
-facebook.com
+naver.com
+kakaocorp.com
+daum.net
+11st.co.kr
+wizwid.com
+wconcept.cn
+keio.ac.jp
+korea.ac.kr
+snu.ac.kr
+yonsei.ac.kr
