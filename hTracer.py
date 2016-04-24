@@ -1,11 +1,5 @@
 #!/usr/bin/python
 
-"""
-hTracer: a hop/RTT measurement tool
-Hun Jae Lee (hxl224)
-EECS325 Computer Networks Project 2
-"""
-
 import socket
 import struct
 import time
