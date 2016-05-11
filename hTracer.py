@@ -2,8 +2,7 @@
 
 """
 hTracer: a hop/RTT measurement tool
-Hun Jae Lee (hxl224)
-EECS325 Computer Networks Project 2
+Made by @hunj (Hun Jae Lee)
 """
 
 import socket
@@ -21,14 +20,14 @@ ICMP = socket.getprotobyname('icmp')
 # UDP socket is for probing and requires datagram socket (SOCK_DGRAM)
 UDP = socket.getprotobyname('udp')
 
+# whether if you want to use the verbose mode
 VERBOSE = True
-
 ## End environment setup
 
 def main(target_file, result_file):
     """
     main function contains the flow of the logic.
-    returns a List that contains tuples of (target, ttl, rtt)
+    returns a tuple of (target, ttl, rtt).
     """
     # prepare data storage for result
     raw_result = []
@@ -53,11 +52,10 @@ def create_sockets(ttl):
     """
     # Socket instances 
     send_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, UDP)
-    recv_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, ICMP)
+    recv_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW,  ICMP)
 
     # Set socket options
     send_socket.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
-
     recv_socket.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
 
     timeout = struct.pack("ll", 5, 0)
@@ -96,6 +94,9 @@ def calculate_distance_between(host1, host2):
     return d
 
 def number_of_hops_and_RTT_to(destination_name):
+    """
+    Finds the number of hops and the RTT to given destination.
+    """
     # destination address and port
     print "<SYSTEM>: Probing '%s'..." % destination_name
     destination_address = socket.gethostbyname(destination_name)
