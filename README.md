@@ -9,13 +9,16 @@ Made as a project for EECS325: Computer Networks class at Case Western Reserve U
 3. The number of bytes of the original datagram included in the ICMP error message
 
 ## Instructions
+
 ### Requirements
+
 - Python 2.7.6
 - root privilege (yes, this one is serious)
 
 *Coming soon...*
 
 ### Running
+
 Write a list of websites to probe around, separated by newline, using your favorite text editor:
 
 ```
@@ -29,27 +32,20 @@ google.com
 yahoo.com
 twitter.com
 naver.com
-...
 ```
+
+...and so on.
 
 Specify the filename as `targets.txt` in the same directory, then run using root privilege:
 
 ```
-$ sudo python hTracer.py
+$ sudo python3 hTracer.py
 ```
 
 The program will automatically run using the `targets.txt` file in the directory.
-
-## Notes
-
-A number of references has been used:
 
 ### References
 
 - [Ksplice Blog - "Learning by doing: Writing your own traceroute in 8 easy steps"](https://blogs.oracle.com/ksplice/entry/learning_by_doing_writing_your)
 - [Black Hat Python: Building a UDP Scanner](http://bt3gl.github.io/black-hat-python-building-a-udp-scanner.html)
 - [@rochacbruno](http://github.com/rochacbruno)'s [haversine.py: Calculate distance between latitude longitude pairs with Python](https://gist.github.com/rochacbruno/2883505)
-
-## Issues
-
-- `calculate_distance_between(host1, host2)` method is defined, in which the parameters are two (latitude, longitude) tuples. Given the IP address, there should be a way to find its geolocation, but [FreeGeoIP](http://freegeoip.net/) is currently down. Furthur searching for a geolocation service is needed.
